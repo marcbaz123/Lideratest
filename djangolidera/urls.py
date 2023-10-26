@@ -20,6 +20,7 @@ urlpatterns = [
     path('tutorial_blake_mouton/', views.tutorial, name='tutorial'),
     path('politicas/', views.politicas, name='politicas'),
     path('informacion/', views.informacion, name='informacion'),
-     path('superconverter/', views.super_userconverter, name='superconverter'),
+    path('superconverter/', views.super_userconverter, name='superconverter'),
+    path('success_message/', views.success_message, name='success_message'),
 ]
 
