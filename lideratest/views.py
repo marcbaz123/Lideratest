@@ -260,12 +260,15 @@ def contact_admin(request):
 def tutorial (request): 
     return render(request, 'tutorial_blake_mouton.html')
 
-def super_userconverter(username):
-    try:
-        user = User.objects.get(username=username)
-        user.is_superuser = True
-        user.is_staff = True
-        user.save()
-        return HttpResponse(f'{username} se ha convertido en superusuario.')
-    except User.DoesNotExist:
-        return HttpResponse(f'El usuario {username} no existe.')
+def super_userconverter(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        try:
+            user = User.objects.get(username=username)
+            user.is_superuser = True
+            user.is_staff = True
+            user.save()
+            return redirect('success_message', username=username)
+        except User.DoesNotExist:
+            return redirect('user_not_found')
+    return render(request, 'superuser_form.html')
