@@ -262,13 +262,17 @@ def tutorial (request):
 
 def super_userconverter(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        try:
-            user = User.objects.get(username=username)
-            user.is_superuser = True
-            user.is_staff = True
-            user.save()
-            return redirect('success_message', username=username)
-        except User.DoesNotExist:
-            return redirect('user_not_found')
-    return render(request, 'superuser_form.html')
+        selected_users = request.POST.getlist('selected_users')
+        for username in selected_users:
+            try:
+                user = User.objects.get(username=username)
+                user.is_superuser = True
+                user.is_staff = True
+                user.save()
+            except User.DoesNotExist:
+                # Maneja el caso en el que el usuario no existe
+                pass
+        return redirect('success_message')
+    
+    users = User.objects.all()
+    return render(request, 'super_userconverter.html', {'users': users})
