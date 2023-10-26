@@ -10,11 +10,11 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #eefdff; /* Color claro #eefdff (HEX) */
+            background: #ffffff; /* Color de fondo original */
         }
 
         .content {
-            background: #eefdff; /* Color claro #eefdff (HEX) */
+            background: #ffffff00; /* Color de fondo original con transparencia */
             padding: 20px;
             min-height: 100vh;
         }
@@ -32,7 +32,7 @@
 
         .menu {
             display: none;
-            background: #eefdff; /* Color claro #eefdff (HEX) */
+            background: #ffffff; /* Color claro #ffffff (HEX) */
             border: 1px solid #ccc;
             border-radius: 5px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -41,7 +41,7 @@
         .menu a {
             display: block;
             text-decoration: none;
-            color: #002336; /* Color oscuro #002336 (HEX) */
+            color: #021d1a; /* Color oscuro #021d1a (HEX) */
             padding: 10px 20px;
         }
     </style>
@@ -49,7 +49,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
-        <button class="navbar-toggler" type ="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -63,11 +63,36 @@
 
                 {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'tutorial' %}"><i class="fas fa-question"></i> Como realizar el test</a>
+                    <a class="nav-link" href="{% url 'expert' %}"><i class="fas fa-user-tie"></i> Test de Blake and Mouton</a>
                 </li>
-
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'tasks' %}"><i class="fas fa-tasks"></i> Tareas Pendientes</a>
+                </li>
+                <li class="nav-item">
+                    <a class= "nav-link" href="{% url 'update_profile' %}"><i class="fas fa-tasks"></i> Actualizar Perfil</a>
+                </li>
+                {% if user.myuser.type_user == 1 %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'tasks_completed' %}"><i class="fas fa-tasks"></i> Tareas Completadas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/tasks/create"><i class="fas fa-plus"></i> Crear Tarea</a>
+                </li>
                 {% else %}
-
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contact_admin' %}"><i class="fas fa-user-check"></i> Conviértete en Evaluador</a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'signup' %}"><i class="fa fa-user-plus"></i> Registrarse</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'signin' %}"><i class="fa fa-sign-in"></i> Iniciar Sesión</a>
+                </li>
                 {% endif %}
 
             </ul>
