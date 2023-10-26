@@ -3,10 +3,10 @@
 {% block content %}
 <div class="container mt-4">
     <div class="card">
-        <div class="card-header text-center">
+        <div class="card-header text-center" style="background: #002336; color: #fff;">
             <h2>Crear Tarea</h2>
         </div>
-        <div class="card-body">
+        <div class="card-body" style="background: rgba(238, 253, 255, 0.95); border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 35, 54, 0.1);">
             <form action="/tasks/create/" method="POST">
                 {% csrf_token %}
                 <div class="form-group">
@@ -22,7 +22,7 @@
                     <label class="form-check-label" for="important">Importante</label>
                 </div>
                 <div class="text-center mt-3">
-                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="submit" class="btn btn-primary" style="background: #002336; border-color: #002336;">Guardar</button>
                 </div>
             </form>
         </div>

@@ -8,13 +8,33 @@
     <title>Resultado del cálculo</title>
     <!-- Agrega el enlace a Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Colores personalizados -->
+    <style>
+        .bg-claro {
+            background-color: #eefdff;
+        }
+        .bg-oscuro {
+            background-color: #002336;
+        }
+
+        /* Estilo para el encabezado con imagen de fondo */
+        .encabezado {
+            background: url('https://i.postimg.cc/ZYD0wTQY/estudiar-psicologia-juridica-1.jpg') center/cover no-repeat;
+            color: #fff;
+            padding: 50px;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <div class="row mt-5">
             <div class="col-md-6 offset-md-3">
-                <div class="card">
-                    <div class="card-header bg-primary text-white">
+                <div class="encabezado text-center">
+                    <h1></h1>
+                </div>
+                <div class="card mt-3">
+                    <div class="card-header bg-oscuro text-white">
                         <h1 class="text-center">Resultado del cálculo</h1>
                     </div>
                     <div class="card-body">
@@ -24,7 +44,7 @@
                         <h2>Tus resultados anteriores:</h2>
                         <ul class="list-group">
                             {% for resultado in resultados %}
-                                <li class="list-group-item">
+                                <li class="list-group-item bg-oscuro text-white">
                                     <strong>Fecha:</strong> {{ resultado.fecha }}<br>
                                     <strong>Resultado:</strong> {{ resultado.resultado_final }}<br>
                                     <!-- Agrega más detalles si es necesario, como calificaciones -->

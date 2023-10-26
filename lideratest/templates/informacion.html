@@ -9,33 +9,53 @@
     <title>Test de Liderazgo de Blake and Mouton</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        body {
-            background: url('https://i.postimg.cc/02bM6xXx/Sin-t-tulo.png') no-repeat center center fixed;
-            background-size: cover;
-            margin: 0;
-            padding: 0;
-        }
-        .custom-card {
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 30px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            font-size: 36px;
-            color: #333;
-            margin-bottom: 20px;
-        }
-        p {
-            font-size: 18px;
-            color: #555;
-            margin-bottom: 20px;
-        }
-        ul {
-            font-size: 18px;
-            color: #555;
-        }
+       body {
+    background: url('https://i.postimg.cc/02bM6xXx/Sin-t-tulo.png') no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+}
+
+.custom-card {
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.rounded-logo {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 100%; /* Haz que la imagen sea 100% del ancho del contenedor */
+    max-width: 300px; /* Establece un ancho máximo para la imagen */
+    height: auto; /* Ajusta la altura automáticamente para mantener la proporción */
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+h1 {
+    font-size: 24px; /* Reduce el tamaño de la fuente para dispositivos móviles */
+    color: #333;
+    margin-bottom: 10px; /* Reduce el espacio inferior */
+}
+
+p {
+    font-size: 16px; /* Reduce el tamaño de la fuente para dispositivos móviles */
+    color: #555;
+    margin-bottom: 10px; /* Reduce el espacio inferior */
+}
+
+ul {
+    font-size: 16px; /* Reduce el tamaño de la fuente para dispositivos móviles */
+    color: #555;
+}
+
+.text-content {
+    margin-right: 0; /* Elimina el margen derecho para que el texto se ajuste correctamente en dispositivos móviles */
+}
     </style>
 </head>
 <body>
@@ -43,19 +63,27 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="custom-card">
+                    <div class="rounded-logo">
+                        <img src="https://i.postimg.cc/ZYD0wTQY/estudiar-psicologia-juridica-1.jpg" alt="Logo" />
+                    </div>
                     <h1>Test de Liderazgo de Blake and Mouton</h1>
-                    <p>El Test de Liderazgo de Blake and Mouton se basa en la obra de Robert R. Blake y Jane S. Mouton, dos psicólogos estadounidenses y fundadores de Scientific Methods, Inc. Esta herramienta evalúa diferentes estilos de liderazgo, centrándose en la orientación hacia las personas o las tareas.</p>
-                    <p>Los estilos de liderazgo propuestos por Blake and Mouton son:</p>
-                    <ul>
-                        <li>Estilo del "Ajeno": Centrado en la tarea y desapegado de las necesidades de las personas.</li>
-                        <li>Estilo "Autoritario": Fuerte en la orientación a la tarea y bajo en la orientación a las personas.</li>
-                        <li>Estilo "Social": Fuerte en la orientación a las personas y bajo en la orientación a la tarea.</li>
-                        <li>Estilo "Líder de equipo": Fuerte tanto en la orientación a las personas como en la orientación a la tarea.</li>
-                    </ul>
-                    <p>El propósito del test es identificar si un líder prioriza las relaciones y la gente o las tareas y los resultados. Estos estilos de liderazgo se enfocan en diferentes aspectos, desde la productividad hasta el trato a las personas.</p>
-                    <p>La Rejilla Gerencial de Blake and Mouton ha tenido éxito en todo el mundo y se ha aplicado en una variedad de campos, desde la producción hasta las organizaciones gubernamentales. Su importancia radica en su capacidad para trascender las diferencias culturales y las estructuras organizativas.</p>
-                    <p>El test se realiza a través de una serie de preguntas que evalúan tus preferencias en términos de liderazgo. Al final, te proporciona una visión de tu estilo de liderazgo y cómo puedes mejorar tus habilidades para lograr el liderazgo que deseas.</p>
-                    <p>Si deseas saber más sobre cómo realizar el test o sus aplicaciones, ¡no dudes en explorar más en nuestro sitio!</p>
+                    <div class="text-content">
+                        <p>El Test de Liderazgo de Blake and Mouton se basa en la obra de Robert R. Blake y Jane S. Mouton, dos psicólogos estadounidenses y fundadores de Scientific Methods, Inc. Esta herramienta evalúa diferentes estilos de liderazgo, centrándose en la orientación hacia las personas o las tareas.</p>
+
+                        <!-- Agrega un salto de línea aquí -->
+                        
+                        <p>Los estilos de liderazgo propuestos por Blake and Mouton son:</p>
+                        <ul>
+                            <li>Estilo del "Ajeno": Centrado en la tarea y desapegado de las necesidades de las personas.</li>
+                            <li>Estilo "Autoritario": Fuerte en la orientación a la tarea y bajo en la orientación a las personas.</li>
+                            <li>Estilo "Social": Fuerte en la orientación a las personas y bajo en la orientación a la tarea.</li>
+                            <li>Estilo "Líder de equipo": Fuerte tanto en la orientación a las personas como en la orientación a la tarea.</li>
+                        </ul>
+                        <p>El propósito del test es identificar si un líder prioriza las relaciones y la gente o las tareas y los resultados. Estos estilos de liderazgo se enfocan en diferentes aspectos, desde la productividad hasta el trato a las personas.</p>
+                        <p>La Rejilla Gerencial de Blake and Mouton ha tenido éxito en todo el mundo y se ha aplicado en una variedad de campos, desde la producción hasta las organizaciones gubernamentales. Su importancia radica en su capacidad para trascender las diferencias culturales y las estructuras organizativas.</p>
+                        <p>El test se realiza a través de una serie de preguntas que evalúan tus preferencias en términos de liderazgo. Al final, te proporciona una visión de tu estilo de liderazgo y cómo puedes mejorar tus habilidades para lograr el liderazgo que deseas.</p>
+                        <p>Si deseas saber más sobre cómo realizar el test o sus aplicaciones, ¡no dudes en explorar más en nuestro sitio!</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -65,4 +93,5 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+
 {% endblock %}

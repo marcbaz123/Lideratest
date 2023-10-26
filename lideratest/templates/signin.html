@@ -1,49 +1,92 @@
-{% extends 'base.html' %}
-
-{% block content %}
-<style>
-    body {
-        background: url('https://i.postimg.cc/02bM6xXx/Sin-t-tulo.png') no-repeat center center fixed;
-        background-size: cover;
-        margin: 0;
-        padding: 0;
-    }
-    .card {
-        background: rgba(255, 255, 255, 0.7); /* Fondo casi transparente */
-        border-radius: 10px;
-    }
-</style>
-<div class="container">
-    <div class="row justify-content-center mt-4">
-        <div class="col-md-5"> <!-- Reducir un poco el ancho del cuadro a col-md-5 -->
-            <div class="card">
-                <div class="card-header text-center">
-                    <h1>Inicio de Sesión</h1>
-                </div>
-                <div class="card-body">
-                    {{ error }}
-                    <form action="/signin/" method="POST">
-                        {% csrf_token %}
-                        <div class="mx-5"> <!-- Aumentar la sangría con mx-5 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url('https://i.postimg.cc/02bM6xXx/Sin-t-tulo.png') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .logo {
+            text-align: center;
+            margin-top: 0px;
+        }
+        .logo img {
+            width: 180px; /* Tamaño del logotipo (ajustado a 150px) */
+            height: 180px; /* Asegura que la imagen sea cuadrada */
+            border-radius: 50%;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .btn-login {
+            background-color: #007bff;
+            color: #fff;
+            font-weight: bold;
+            border: none;
+        }
+        .btn-login:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h1>Inicio de Sesión</h1>
+                    </div>
+                    <div class="card-body">
+                        {{ error }}
+                        <form action="/signin/" method="POST">
+                            {% csrf_token %}
+                            <div class="logo">
+                                <img src="https://i.postimg.cc/QjZRFq2d/OIG.jpg" alt="Logo de tu empresa">
+                            </div>
                             <div class="form-group">
-                                <label for="id_username" class="form-label">Usuario</label>
+                                <label for="id_username">Usuario</label>
                                 <input type="text" name="username" id="id_username" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label for= "id_password" class="form-label">Contraseña</label>
+                                <label for="id_password">Contraseña</label>
                                 <input type="password" name="password" id="id_password" class="form-control">
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
+                                <button type="submit" class="btn btn-login btn-block">Iniciar Sesión</button>
                             </div>
-                        </div>
-                    </form>
+                            <div class="text-center mt-3">
+                                <a href="/signup">Regístrate</a>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="text-center mt-3">
-    <p>&copy; 2023 Lideratest - Desarrollado por @marcbaz1998 & @jesus1999 - Universidad Nacional Del Este</p>
-</div>
-{% endblock %}
+
+    <div class="container text-center mt-3">
+        <p>&copy; 2023 Lideratest - Desarrollado por @marcbaz1998 & @jesus1999</p>
+      
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+</body>
+</html>

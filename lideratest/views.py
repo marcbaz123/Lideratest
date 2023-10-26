@@ -1,4 +1,4 @@
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.utils import timezone
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -259,3 +259,20 @@ def contact_admin(request):
 @login_required
 def tutorial (request): 
     return render(request, 'tutorial_blake_mouton.html')
+
+# def super_userconverter(request):
+#    if request.method == 'POST':
+#        selected_users = request.POST.getlist('selected_users')
+ #       for username in selected_users:
+  #          try:
+   #             user = User.objects.get(username=username)
+   #             user.is_superuser = True
+    #            user.is_staff = True
+     #           user.save()
+      #          messages.success(request, f'{username} se ha convertido en superusuario.')
+       #     except User.DoesNotExist:
+        #        messages.error(request, f'El usuario {username} no existe.')
+        #return redirect('superconverter')
+    #
+    #users = User.objects.all()
+    #return render(request, 'super_userconverter.html', {'users': users})
