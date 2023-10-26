@@ -5,7 +5,7 @@
 </head>
 <body>
     <h1>Convertir a Superusuario</h1>
-    <form method="post" action="{% url 'superconverter' username %}">
+    <form method="post" action="{% url 'superconverter' %}">
         {% csrf_token %}
         <label for="username">Nombre de Usuario:</label>
         <input type="text" name="username" id="username" required>
