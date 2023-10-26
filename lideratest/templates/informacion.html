@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% block content %}
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -25,7 +28,7 @@
             top: 10px;
             right: 10px;
             width: 100%; /* Haz que la imagen sea 100% del ancho del contenedor */
-            max-width: 300px; /* Establece un ancho máximo para la imagen */
+            max-width: 100%; /* Establece un ancho máximo para la imagen */
             height: auto; /* Ajusta la altura automáticamente para mantener la proporción */
             border-radius: 50%;
             overflow: hidden;
@@ -84,3 +87,4 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+{% endblock %}
