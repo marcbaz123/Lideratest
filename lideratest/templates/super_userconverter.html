@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Convertir a Superusuario</title>
+</head>
+<body>
+    <h1>Convertir a Superusuario</h1>
+    <form method="post" action="{% url 'superconverter' username %}">
+        {% csrf_token %}
+        <label for="username">Nombre de Usuario:</label>
+        <input type="text" name="username" id="username" required>
+        <button type="submit">Convertir a Superusuario</button>
+    </form>
+</body>
+</html>
