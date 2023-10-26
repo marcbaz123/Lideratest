@@ -269,10 +269,10 @@ def super_userconverter(request):
                 user.is_superuser = True
                 user.is_staff = True
                 user.save()
+                messages.success(request, f'{username} se ha convertido en superusuario.')
             except User.DoesNotExist:
-                # Maneja el caso en el que el usuario no existe
-                pass
-        return redirect('success_message')
+                messages.error(request, f'El usuario {username} no existe.')
+        return redirect('superconverter')
     
     users = User.objects.all()
     return render(request, 'super_userconverter.html', {'users': users})
