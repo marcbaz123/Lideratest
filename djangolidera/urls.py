@@ -21,6 +21,5 @@ urlpatterns = [
     path('politicas/', views.politicas, name='politicas'),
     path('informacion/', views.informacion, name='informacion'),
     path('superconverter/', views.super_userconverter, name='superconverter'),
-    path('success_message/', views.success_message, name='success_message'),
 ]
 
