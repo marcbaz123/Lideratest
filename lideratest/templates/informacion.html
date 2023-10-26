@@ -23,16 +23,6 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             position: relative;
         }
-        .rounded-logo {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 100%; /* Haz que la imagen sea 100% del ancho del contenedor */
-            max-width: 100%; /* Establece un ancho máximo para la imagen */
-            height: auto; /* Ajusta la altura automáticamente para mantener la proporción */
-            border-radius: 50%;
-            overflow: hidden;
-        }
         h1 {
             font-size: 24px; /* Reduce el tamaño de la fuente para dispositivos móviles */
             color: #333;
@@ -50,6 +40,9 @@
         .text-content {
             margin-right: 0; /* Elimina el margen derecho para que el texto se ajuste correctamente en dispositivos móviles */
         }
+        .center-image {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -57,9 +50,6 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="custom-card">
-                    <div class="rounded-logo">
-                        <img src="https://i.postimg.cc/ZYD0wTQY/estudiar-psicologia-juridica-1.jpg" alt="Logo" />
-                    </div>
                     <h1>Test de Liderazgo de Blake and Mouton</h1>
                     <div class="text-content">
                         <p>El Test de Liderazgo de Blake and Mouton se basa en la obra de Robert R. Blake y Jane S. Mouton, dos psicólogos estadounidenses y fundadores de Scientific Methods, Inc. Esta herramienta evalúa diferentes estilos de liderazgo, centrándose en la orientación hacia las personas o las tareas.</p>
@@ -82,9 +72,13 @@
             </div>
         </div>
     </div>
+    <div class="center-image">
+        <img src="https://i.postimg.cc/ZYD0wTQY/estudiar-psicologia-juridica-1.jpg" alt="Logo" />
+    </div>
     <script src="https://ajax.googleapis.com/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+
 {% endblock %}
