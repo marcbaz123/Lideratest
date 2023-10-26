@@ -32,11 +32,11 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            migrations.RunPython(cargar_datos_iniciales),
+        migrations.AddField( 
             model_name='knowledge_base',
             name='id_kbase',
             field=models.AutoField(auto_created=True, db_column='id', default=1, primary_key=True, serialize=False),
             
         ),
+        migrations.RunPython(cargar_datos_iniciales),
     ]
