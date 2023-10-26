@@ -260,7 +260,7 @@ def contact_admin(request):
 def tutorial (request): 
     return render(request, 'tutorial_blake_mouton.html')
 
-def super_userconverter(request, username):
+def super_userconverter(username):
     try:
         user = User.objects.get(username=username)
         user.is_superuser = True
