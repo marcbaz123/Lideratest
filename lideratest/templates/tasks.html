@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h1>Tasks Pending</h1>
+    <style>
+        body {
+          background: url('https://i.postimg.cc/02bM6xXx/Sin-t-tulo.png') no-repeat center center fixed;
+          background-size: cover;
+          margin: 0;
+          padding: 0;
+        }
+      </style>
+    <div class="row">
+        {% for task in tasks %}
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        {% if task.important %}
+                            <strong>{{ task.title }}</strong>
+                        {% else %}
+                            {{ task.title }}
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{ task.description }}</p>
+                        <p class="card-text">User: {{ task.user.username }}</p>
+                        <p class="card-text">{{ task.datecompleted|date:'M j Y:i'}}</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{% url 'task_detail' task.id %}" class="btn btn-primary">Details</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

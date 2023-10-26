@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  body {
+      background: url('https://i.postimg.cc/02bM6xXx/Sin-t-tulo.png') no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+  }
+  .card {
+      background: rgba(255, 255, 255, 0.95); /* Fondo casi transparente */
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  }
+</style>
+<div class="container">
+  <div class="row justify-content-center mt-4">
+      <div class="col-md-6"> <!-- Aumentar el ancho del cuadro a col-md-6 -->
+          <div class="card">
+              <div class="card-header bg-secondary text-white text-center">
+                  <h1>Actualizar Perfil</h1>
+              </div>
+              <div class="card-body">
+                  {{ form.non_field_errors }}
+                  <form method="post">
+                      {% csrf_token %}
+                      <div class="form-group">
+                          <label for="{{ form.first_name.id_for_label }}">Nombre completo</label>
+                          <input type="text" class="form-control form-control-sm" id="{{ form.first_name.id_for_label }}" name="first_name" value="{{ form.first_name.value }}">
+                      </div>
+                      <div class="form-group">
+                          <label for="{{ form.last_name.id_for_label }}">Apellido completo</label>
+                          <input type="text" class="form-control form-control-sm" id="{{ form.last_name.id_for_label }}" name="last_name" value="{{ form.last_name.value }}">
+                      </div>
+                      <div class="form-group">
+                          <label for="{{ form.email.id_for_label }}">Correo</label>
+                          <input type="email" class="form-control form-control-sm" id="{{ form.email.id_for_label }}" name="email" value="{{ form.email.value }}">
+                      </div>
+                      <div class="text-center">
+                          <button type="submit" class="btn btn-primary btn-block">Guardar Cambios</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test de Blake and Mouton</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="card">
+      <div class="card-body">
+        <h1 class="card-title">Test de Blake and Mouton</h1>
+        <p class="card-text">Tutorial Lideratest.</p>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title">Paso 1: Entiende las Dimensiones</h2>
+            <p><strong>Interés por la producción:</strong> Cuánto te importa el rendimiento, la eficiencia y los resultados en tu trabajo o liderazgo.</p>
+            <p><strong>Interés por las personas:</strong> Cuánto te importan las necesidades y el bienestar de las personas con las que trabajas o lideras.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title">Paso 2: Responde las Preguntas</h2>
+            <p>El test consta de varias preguntas, cada una con opciones de respuesta. Asigna un valor a cada item según la escala.</p>
+            <p>Ejemplo de respuesta: "Nunca" = 0, "A veces" = 1, 2 y 3 "Siempre" = 4 y 5</p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mt-4">
+      <div class="card-body">
+        <h2 class="card-title">Paso 3: Enviar Formulario</h2>
+        <p>Una vez hayas respondido todas las preguntas, haz click al boton Finalizar test </p>
+      </div>
+    </div>
+
+    <div class="card mt-4">
+      <div class="card-body">
+        <h2 class="card-title">Paso 4: Visualiza tu Estilo de Liderazgo</h2>
+        <p>Si tu puntuación en "Interés por la producción" es alta y tu puntuación en "Interés por las personas" es baja, tiendes hacia un estilo de liderazgo orientado a la tarea.</p>
+        <p>Si tu puntuación en "Interés por la producción" es baja y tu puntuación en "Interés por las personas" es alta, tiendes hacia un estilo de liderazgo orientado a las personas.</p>
+      </div>
+    </div>
+  </div>
+  <div style="background-color: #032522; padding: 10px; color: #fff; text-align: center;">
+    <button class="btn btn-outline-secondary" style="opacity: 0.5;" onclick="location.href='{% url 'expert' %}'">
+        Volver Al Test
+    </button>
+</div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
