@@ -184,39 +184,46 @@ def signin(request):
             return redirect('home')
         
 
+
 @login_required
 def expert(request):
     # Obtén todas las preguntas del modelo knowledge_base
     preguntas = knowledge_base.objects.all().order_by('id_kbase')
+    
+    resultado = ""  # Agrega la definición de la variable resultado
+
     if request.method == 'POST':
         total_orientacion_personas = 0
         total_orientacion_produccion = 0
+        calificaciones = {}  # Crear un diccionario para almacenar calificaciones
+
         for i in range(1, 19):
             respuesta = request.POST.get(f"respuesta_{i}")
             if respuesta is not None:
                 respuesta = int(respuesta)
-               
             else:
                 respuesta = 0  # O cualquier otro valor por defecto que desees si no hay respuesta.
-              
+
             if i in [1, 4, 6, 9, 10, 12, 14, 16, 17]:
                 total_orientacion_personas += respuesta
             else:
                 total_orientacion_produccion += respuesta
-                
-        print('Total orientacion produccion', total_orientacion_produccion)
-        print('Total orientacion person', total_orientacion_personas)
+
+            # Almacena las calificaciones junto con las preguntas
+            pregunta = preguntas.get(id_kbase=i)
+            calificaciones[pregunta.question] = respuesta
+
         total_orientacion_personas *= 0.2
         total_orientacion_produccion *= 0.2
-        print('Total orientacion produccion', total_orientacion_produccion)
-        print('Total orientacion person', total_orientacion_personas)
+        
+         # Llamada al motor de inferencia
         engine = MotorLiderazgo()
         engine.reset()
         engine.declare(EstiloLiderazgo(total_orientacion_personas=total_orientacion_personas, total_orientacion_produccion=total_orientacion_produccion))
         engine.run()
         resultado = engine.resultado
-        print(resultado)
-
+        
+        # Calcular el resultado
         if total_orientacion_produccion > total_orientacion_personas:
             resultado = "Resultados inconcluyentes Con tendencias hacia Centrado a Produccion"
         elif total_orientacion_personas > total_orientacion_produccion:
@@ -226,11 +233,14 @@ def expert(request):
 
         # Guardar los resultados en la base de datos
         resultado_liderazgo = ResultadoLiderazgo(
-        user=request.user,  # Asigna el usuario actual
-        calificaciones={f"respuesta_{i}": int(request.POST.get(f"respuesta_{i}", 0)) for i in range(1, 19)},
-        resultado_final=resultado  # Asigna el resultado final
-    )
+            user=request.user,  # Asigna el usuario actual
+            calificaciones=calificaciones,  # Asigna el diccionario de calificaciones
+            resultado_final=resultado,  # Asigna el resultado final
+            total_orientacion_personas=total_orientacion_personas,  # Asigna el total_orientacion_personas
+            total_orientacion_produccion=total_orientacion_produccion  # Asigna el total_orientacion_produccion
+        )
         resultado_liderazgo.save()
+
         # Recuperar los resultados de la base de datos
         resultados = ResultadoLiderazgo.objects.filter(user=request.user)
 
@@ -238,7 +248,7 @@ def expert(request):
         return render(request, 'test_result.html', {'resultado_liderazgo': resultado, 'resultados': resultados, 'preguntas': preguntas})
     else:
         # Si el formulario no se ha enviado, simplemente muestra el formulario HTML.
-        return render(request, 'expert.html',{'preguntas':preguntas})
+        return render(request, 'expert.html', {'preguntas': preguntas})
 
 def contact_admin(request):
     if request.method == 'POST':

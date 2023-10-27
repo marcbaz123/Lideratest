@@ -3,6 +3,10 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 # Create your models here.
+class MyUser(models.Model):
+    type_user = models.IntegerField(default=0)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    
 class Task(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True)
@@ -10,18 +14,17 @@ class Task(models.Model):
     datecompleted = models.DateTimeField(null=True, blank=True)
     important = models.BooleanField(default=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    
     def __str__(self):
             return self.title + ' - by ' + self.user.username
     
 class knowledge_base(models.Model):
-    id_kbase = models.AutoField(primary_key=True, db_column='id')
+    id_kbase = models.AutoField(primary_key=True, db_column='id', default=1)
     question = models.TextField()
     def __str__(self):
         return str(self.id_kbase)
     
-class MyUser(models.Model):
-    type_user = models.IntegerField(default=0)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
 # Definir un receptor para la señal post_save del modelo User
 @receiver(post_save, sender=User)
 def create_myuser(sender, instance, created, **kwargs):
@@ -37,4 +40,5 @@ class ResultadoLiderazgo(models.Model):
     fecha = models.DateTimeField(auto_now_add=True)
     calificaciones = models.JSONField()
     resultado_final = models.CharField(max_length=255)
-    
+    total_orientacion_personas = models.FloatField(default=0.0)  # Campo para almacenar total_orientacion_personas
+    total_orientacion_produccion = models.FloatField(default=0.0)  
