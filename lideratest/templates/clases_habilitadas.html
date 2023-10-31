@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    body {
+        background-image: url('https://i.postimg.cc/02bM6xXx/Sin-t-tulo.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+    }
+</style>
+
+<div class="container">
+    <h1>Evaluaciones Pendientes</h1>
+    <!-- Tu estilo CSS aquí -->
+    <div class="row">
+        {% for clase in clases_habilitadas %}
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        {{ clase.nombre }}
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{ clase.descripcion }}</p>
+                        <p class="card-text">Creado por: {{ clase.creador }}</p>
+                        <!-- Agrega más detalles de la clase según tus necesidades -->
+                    </div>
+                    <div class="card-footer">
+                        <a href="{% url 'detalle_clase' clase.id %}" class="btn btn-primary">Detalles</a>
+                        <a href="{% url 'expert_test' clase.id %}" class="btn btn-success">Realizar Test</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        
+    </div>
+    
+</div>
+
+{% endblock %}

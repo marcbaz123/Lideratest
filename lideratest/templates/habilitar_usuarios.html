@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+{% extends 'base_test.html' %}
+{% block content %}
+<html lang="es">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habilitar Usuarios para la Evaluación de {{clase.nombre}}</title>
+    <!-- Incluye el archivo CSS de Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-image: url('https://i.postimg.cc/SNkGs5wN/gestion-empresarial.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.507);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+        }
+        .list-group-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .user-info span {
+            margin: 5px 0;
+        }
+        .logo {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+        }
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        /* Estilo moderno para los inputs */
+        .form-check-input {
+            display: none; /* Oculta el checkbox nativo */
+        }
+        .custom-checkbox .custom-control-label::before {
+            border: 2px solid #007BFF; /* Borde del checkbox personalizado */
+        }
+        .custom-checkbox .custom-control-label::after {
+            background-color: #007BFF; /* Color de fondo del checkbox cuando está marcado */
+        }
+        .custom-checkbox .custom-control-label::before, .custom-checkbox .custom-control-label::after {
+            border-radius: 4px; /* Bordes redondeados del checkbox personalizado */
+        }
+    </style>
+    <!-- Agrega reglas CSS para hacerlo responsive -->
+    <style>
+        /* Estilos para pantallas pequeñas (teléfonos móviles) */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px; /* Espaciado para pantallas pequeñas */
+            }
+            .logo {
+                width: 60px;
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="mt-4">Habilitar Usuarios para la Evaluación</h2>
+    
+        <p class="lead">Evaluación para: <strong>{{clase.nombre}}</strong></p>
+
+        <form method="post">
+            {% csrf_token %}
+            
+            <!-- Lista de usuarios disponibles -->
+            <div class="list-group">
+                {% for usuario in usuarios_disponibles %}
+                    <div class="list-group-item">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" name="usuarios_habilitados" value="{{usuario.id}}" id="usuario{{usuario.id}}">
+                            <label class="custom-control-label" for="usuario{{usuario.id}}">
+                                <div class="user-info">
+                                    <span class="user-name" style="display: inline-block; margin-right: 10px;">{{usuario.username}}</span>
+                                    <span style="display: inline-block; margin-right: 10px;">{{usuario.first_name}} - {{usuario.last_name}}</span>
+                                    <span style="display: inline-block;">{{usuario.email}}</span>
+                                </div>
+                            </label>
+                        </div><img src="https://i.postimg.cc/DzBV1JqN/OIG-5-FEMREMZ6-Fh6-LVyay.jpg" alt="Imagen" style="max-width: 100%; max-height: 100px;">
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Botón para habilitar usuarios -->
+            <button type="submit" class="btn btn-primary mt-3">Habilitar Usuarios</button>
+        </form>
+
+        <!-- Agregar el logo de la empresa en la esquina inferior derecha -->
+        <div class="logo">
+            <img src="https://i.postimg.cc/QjZRFq2d/OIG.jpg" alt="Logo de tu empresa">
+        </div>
+        
+        <a href="{% url 'home' %}" class="btn btn-secondary mt-3">Volver al Inicio</a>
+    </div>
+    
+    <!-- Incluye los archivos JavaScript de Bootstrap al final del cuerpo del documento para un rendimiento óptimo -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstra"></script>
+</body>
+</html>
+{% endblock %}

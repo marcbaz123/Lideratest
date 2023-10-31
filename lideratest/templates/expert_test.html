@@ -1,0 +1,144 @@
+{% extends 'base_test.html' %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tu Página</title>
+  <style>
+    body {
+      background: url('https://i.postimg.cc/02bM6xXx/Sin-t-tulo.png') no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    .rating input {
+      margin-right: 10px;
+    }
+    table {
+      border-collapse: collapse;
+      margin: 5px auto;
+      max-width: 100%;
+      width: 100%;
+      background-color: #f2f2f2; /* Cambia este valor al color de fondo que desees */
+      border: 0px solid #ccc; /* Agrega un borde alrededor del área del test */
+      border-radius: 0px; /* Añade bordes redondeados al área del test */
+      padding: 0px; /* Espacio interior para el área del test */
+    }
+
+    /* Estilos para pantallas pequeñas (menos de 600px) */
+    @media (max-width: 600px) {
+      /* Ajustes específicos para pantallas pequeñas */
+      table {
+        margin: 0; /* Elimina el margen en pantallas pequeñas */
+        border: 0px solid #ccc; /* Añade un borde delgado en pantallas pequeñas */
+        border-radius: 0px; /* Vuelve a agregar bordes redondeados en pantallas pequeñas */
+        padding: 0px; /* Añade espacio interior en pantallas pequeñas */
+      }
+
+      th, td {
+        padding: 5px; /* Reduce el espacio interior de las celdas en pantallas pequeñas */
+      }
+
+      .nowrap {
+        white-space: nowrap;
+      }
+    }
+
+    th, td {
+      border: 2px solid rgba(0, 0, 0, 0.5);
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background-color: #ccc;
+      font-weight: bold;
+    }
+    button {
+      background-color: #021a32;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      display: block;
+      margin: 20px auto;
+    }
+    button:hover {
+      background-color: #021a32;
+    }
+
+    /* Estilos para pantallas pequeñas (menos de 600px) */
+    @media (max-width: 600px) {
+      .question {
+        margin-bottom: 10px;
+      }
+      .rating input {
+        margin-right: 10px;
+      }
+      th, td {
+        font-size: 12px;
+      }
+    }
+
+    /* Estilos para centrar el título */
+    h1 {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+    <form method="post" action="{% url 'expert_test' clase.id %}">
+        {% csrf_token %}
+        <input type="hidden" name="clase_id" value="{{ clase.id }}">
+        <h1>Test de Blake and Mouton</h1>
+        <table class="table table-responsive">
+            <tr>
+                <th>N°</th>
+                <th>Dimensiones a evaluar</th>
+                <th>
+                  Nunca
+                  <div class="subindice">0</div>
+              </th>
+              <th>
+                  A veces 
+                  <div class="subindice">1 2 3</div>
+              </th>
+              <th>
+                  Siempre
+                  <div class="subindice">4 5</div>
+              </th>
+            </tr>
+            {% for i in preguntas %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ i.question }}</td>
+                <td>
+                    <input type="radio" name="respuesta_{{ i }}" value="0">
+                </td>
+                <td class="nowrap">
+                    <input type="radio" name="respuesta_{{ i }}" value="1">
+                
+                    <input type="radio" name="respuesta_{{ i }}" value="2">
+                
+                    <input type="radio" name="respuesta_{{ i }}" value="3">
+                </td>
+                <td>
+                    <input type="radio" name="respuesta_{{ i }}" value="4">
+               
+                    <input type="radio" name="respuesta_{{ i }}" value="5">
+                    
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <button type="submit">Finalizar Test</button>
+    </form>
+    <p>{{ resultado_evaluador }}</p>
+</body>
+</html>
+{% endblock %}

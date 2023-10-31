@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="container">
+    <h1>Evaluaciones Completadas</h1>
+    <style>
+      body {
+        background: url('https://i.postimg.cc/02bM6xXx/Sin-t-tulo.png') no-repeat center center fixed;
+        background-size: cover;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+    <div class="row">
+      {% for clase in clases_habilitadas %}
+        <div class="col-md-4">
+          <div class="card mb-4">
+            <div class="card-header">
+              {% if clase.important %}
+                <strong>{{ clase.nombre }}</strong>
+              {% else %}
+                {{ clase.nombre }}
+              {% endif %}
+            </div>
+            <div class="card-body">
+              <p class="card-text">{{ clase.descripcion }}</p>
+              <!-- Agrega más información sobre la clase según tus necesidades -->
+            </div>
+            <div class="card-footer">
+              <a href="{% url 'clase_completada' clase.id %}" class="btn btn-primary">Detalles</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

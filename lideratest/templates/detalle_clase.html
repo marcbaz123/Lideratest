@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% block content %}
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de la Clase - {{ clase.nombre }}</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Enlaza tu archivo CSS si lo tienes -->
+</head>
+<body>
+    <header>
+        <h1>Detalle de la Clase</h1>
+    </header>
+
+    <main>
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">{{ clase.nombre }}</h2>
+                <p class="card-text">{{ clase.descripcion }}</p>
+                
+                <!-- Aquí puedes agregar más detalles de la clase si lo deseas -->
+            </div>
+        </div>
+
+        <a href="{% url 'home' %}" class="btn">Volver al Inicio</a>
+    </main>
+
+    <footer>
+        <!-- Pie de página si es necesario -->
+    </footer>
+</body>
+</html>
+{% endblock %}

@@ -62,30 +62,36 @@
             <ul class="navbar-nav ml-auto">
 
                 {% if user.is_authenticated %}
-                <li class="nav-item">
+             <!--   <li class="nav-item">
                     <a class="nav-link" href="{% url 'expert' %}"><i class="fas fa-user-tie"></i> Test de Blake and Mouton</a>
-                </li>
+                </li> -->
+                
+                
+                {% if user.myuser.type_user == 1 %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'tasks' %}"><i class="fas fa-tasks"></i> Tareas Pendientes</a>
                 </li>
                 <li class="nav-item">
-                    <a class= "nav-link" href="{% url 'update_profile' %}"><i class="fas fa-tasks"></i> Actualizar Perfil</a>
-                </li>
-                {% if user.myuser.type_user == 1 %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'tasks_completed' %}"><i class="fas fa-tasks"></i> Tareas Completadas</a>
+                    <a class="nav-link" href="{% url 'clases_panel' %}"><i class="fas fa-tasks"></i> Evaluaciones Creadas</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/tasks/create"><i class="fas fa-plus"></i> Crear Tarea</a>
+                    <a class="nav-link" href="{% url 'crear_clase' %}"><i class="fas fa-plus"></i> Crear Evaluacion</a>
                 </li>
                 {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'contact_admin' %}"><i class="fas fa-user-check"></i> Conviértete en Evaluador</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'clases' %}"><i class="fas fa-file"></i> Evaluaciones Habilitadas</a>
+                </li>
                 {% endif %}
+                <li class="nav-item">
+                    <a class= "nav-link" href="{% url 'update_profile' %}"><i class="fas fa-tasks"></i> Actualizar Perfil</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a>
                 </li>
+
                 {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'signup' %}"><i class="fa fa-user-plus"></i> Registrarse</a>
@@ -93,8 +99,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'signin' %}"><i class="fa fa-sign-in"></i> Iniciar Sesión</a>
                 </li>
-                {% endif %}
 
+                {% endif %}
+                
             </ul>
         </div>
     </nav>

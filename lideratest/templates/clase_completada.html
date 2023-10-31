@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+<html lang="es">
+    <style>
+        body {
+            background-image: url('https://i.postimg.cc/SNkGs5wN/gestion-empresarial.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+<div class="container">
+    <h1 class="mt-4">Detalles de la Clase</h1>
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Nombre de la Clase: {{ clase.nombre }}</h4>
+        <p class="card-text">Descripción: {{ clase.descripcion }}</p>
+      </div>
+    </div>
+
+    <h2 class="mt-4">Resultados de la Clase</h2>
+    <ul class="list-group">
+      {% for resultado in resultados_con_info_usuario %}
+        <li class="list-group-item">
+          <span class="font-weight-bold">Evaluado: {{ resultado.evaluado.username }}</span><br>
+          <span>Nombre: {{ resultado.nombre }}</span><br>
+          <span>Apellido: {{ resultado.apellido }}</span><br>
+          <span>Correo: {{ resultado.correo }}</span><br>
+          <span>Resultado: {{ resultado.resultado }}</span><br>
+          <span>Total Orientación Personas: {{ resultado.total_orientacion_personas }}</span><br>
+          <span>Total Orientación Producción: {{ resultado.total_orientacion_produccion }}</span><br>
+          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#calificaciones{{ forloop.counter }}">Ver Calificaciones</button>
+
+          <div id="calificaciones{{ forloop.counter }}" class="collapse">
+            <ul>
+              {% for key, value in resultado.calificaciones.items %}
+                <li>{{ key }}: {{ value }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+</html>
+{% endblock %}

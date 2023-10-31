@@ -6,7 +6,8 @@
     <title>Lideratest</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
+    <script src="path-to-your-jquery.js"></script>
+    <script src="path-to-bootstrap.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -60,13 +61,11 @@
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
-
-                {% if user.is_authenticated %}
+                
+                {% if user.myuser.type_user == 0 %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'tutorial' %}"><i class="fas fa-question"></i> Como realizar el test</a>
                 </li>
-
-                {% else %}
 
                 {% endif %}
 

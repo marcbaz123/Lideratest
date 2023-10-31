@@ -55,12 +55,14 @@
             <div class="col-md-6 mb-4">
                 <div class="card custom-card">
                     <div class="card-header">
+                {% if user.myuser.type_user == 0 %}   
                         <h1 class="text-center">Resultado del cálculo</h1>
-                    </div>
-                    <div class="card-body">
+                        </div>
+                        <div class="card-body">
                         <h2>Bienvenido, {{ user.first_name }}!</h2>
                         <p class="lead">Descubre tu potencial para dirigir un equipo.</p>
-
+                        
+                        
                         <!-- Muestra el último resultado si existe -->
                         {% if resultado_liderazgo %}
                             <h2>Tu último resultado:</h2>
@@ -68,6 +70,22 @@
                         {% else %}
                             <p class="lead">Prueba el test de Blake And Mouton.</p>
                         {% endif %}
+
+                {% else %}
+                        <h1 class="text-center">Seccion de Evaluador</h1>
+                        </div>
+                        <div class="card-body">
+                            <h2>Bienvenido, {{ user.first_name }}!</h2>
+                            <p class="lead">Evalúa el rendimiento o calidad según criterios establecidos en Lideratest.</p>
+                    
+                    
+                        <!-- Muestra el último resultado si existe -->
+                   
+                       
+
+                      
+                {% endif %}
+
                     </div>
                 </div>
             </div>

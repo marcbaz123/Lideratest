@@ -1,4 +1,4 @@
-
+from django import template
 from django.http import Http404, HttpResponse
 from django.utils import timezone
 from django.shortcuts import get_object_or_404, render, redirect
@@ -6,14 +6,15 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
-from .forms import Taskform, UserProfileUpdateForm
-from .models import ResultadoLiderazgo, Task, knowledge_base
+from .forms import Taskform, UserProfileUpdateForm, ClaseForm
+from .models import Clase, MyUser, ResultadoLiderazgo, ResultadosEvaluador, Task, knowledge_base
 from django.contrib.auth.decorators import login_required
 from .motor_inferencia import EstiloLiderazgo, MotorLiderazgo
 from django.core.mail import send_mail
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import update_session_auth_hash
+
 # Create your views here.
 def home(request):
      # Verifica si el usuario está autenticado
@@ -59,7 +60,8 @@ def signup(request):
             'form': UserCreationForm,
             'error': "Password do not match"
             })
-
+def is_type_user_1(user):
+    return user.myuser.type_user == 1
 @login_required
 def update_profile(request):
     if request.method == "POST":
@@ -184,7 +186,6 @@ def signin(request):
             return redirect('home')
         
 
-
 @login_required
 def expert(request):
     # Obtén todas las preguntas del modelo knowledge_base
@@ -224,12 +225,13 @@ def expert(request):
         resultado = engine.resultado
         
         # Calcular el resultado
-        if total_orientacion_produccion > total_orientacion_personas:
-            resultado = "Resultados inconcluyentes Con tendencias hacia Centrado a Produccion"
-        elif total_orientacion_personas > total_orientacion_produccion:
-            resultado = "Resultados inconcluyentes Con tendencias hacia Centrado a Personas"
-        elif total_orientacion_personas == 5 and total_orientacion_produccion == 5:
-            resultado = "Resultado indefinido sin tendencias a social o autoritario"
+        if not resultado:
+            if total_orientacion_produccion > total_orientacion_personas:
+                resultado = "Resultados inconcluyentes Con tendencias hacia Centrado a Produccion"
+            elif total_orientacion_personas > total_orientacion_produccion:
+                resultado = "Resultados inconcluyentes Con tendencias hacia Centrado a Personas"
+            elif total_orientacion_personas == 5 and total_orientacion_produccion == 5:
+                resultado = "Resultado indefinido sin tendencias a social o autoritario"
 
         # Guardar los resultados en la base de datos
         resultado_liderazgo = ResultadoLiderazgo(
@@ -259,7 +261,8 @@ def contact_admin(request):
         recipient_list = ['marcbaz1998@gmail.com']  # Cambia esto a tu dirección de correo
 
         try:
-            send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+            full_message= f"Usuario : {user.username}\n\n{message}"
+            send_mail(subject, full_message, from_email, recipient_list, fail_silently=False)
             messages.success(request, 'Correo enviado con éxito. Gracias por contactarnos.')
         except:
             messages.error(request, 'Hubo un error al enviar el correo.')
@@ -286,5 +289,183 @@ def tutorial (request):
         #return redirect('superconverter')
     #
     #users = User.objects.all()
-
     #return render(request, 'super_userconverter.html', {'users': users})
+
+@login_required
+def crear_clase(request):
+    if request.method == 'POST':
+        # Si se envió un formulario POST, procesa los datos
+        form = ClaseForm(request.POST)  # Utiliza tu formulario para crear clases
+
+        if form.is_valid():
+            # Si el formulario es válido, crea una nueva clase
+            nueva_clase = form.save(commit=False)
+            nueva_clase.creador = request.user  # Asigna al usuario actual como el creador
+            nueva_clase.save()
+
+            # Agregar el creador a la lista de usuarios habilitados
+            nueva_clase.usuarios_habilitados.add(request.user)
+            nueva_clase.save()
+
+            # Redirige a la página de detalle de la clase recién creada o a donde desees
+            return redirect('habilitar_usuarios', clase_id=nueva_clase.id)
+    else:
+        # Si es una solicitud GET, muestra el formulario para crear clases
+        form = ClaseForm()  # Utiliza tu formulario para crear clases
+
+    return render(request, 'crear_clase.html', {'form': form})
+ 
+
+@login_required
+def habilitar_usuarios(request, clase_id):
+    clase = get_object_or_404(Clase, pk=clase_id)
+    
+    usuarios_disponibles = User.objects.exclude(pk=request.user.pk)
+    usuarios_habilitados = clase.usuarios_habilitados.all()
+    
+    if request.method == 'POST':
+        # Procesar el formulario y habilitar usuarios seleccionados
+        usuarios_habilitados_ids = request.POST.getlist('usuarios_habilitados')
+        clase.usuarios_habilitados.set(usuarios_habilitados_ids)
+    
+    
+    return render(request, 'habilitar_usuarios.html', {
+        'clase': clase,
+        'usuarios_disponibles': usuarios_disponibles,
+        'usuarios_habilitados': usuarios_habilitados
+    })
+    
+@login_required
+def detalle_clase(request, clase_id):
+    clase = get_object_or_404(Clase, pk=clase_id)
+    # Aquí puedes agregar cualquier lógica adicional que desees para mostrar detalles de la clase
+    if request.user not in clase.usuarios_habilitados.all():
+        return redirect('home')
+    else:
+        return render(request, 'detalle_clase.html', {'clase': clase})
+
+@login_required
+def clases_habilitadas(request):
+    user = request.user
+    clases_habilitadas = Clase.objects.filter(usuarios_habilitados=user)
+    return render(request, 'clases_habilitadas.html', {'clases_habilitadas': clases_habilitadas})
+
+@login_required
+def expert_test(request, clase_id):
+    clase = get_object_or_404(Clase, pk=clase_id)
+
+    # Verifica si el usuario actual está habilitado para tomar el test en esta clase
+    if request.user in clase.usuarios_habilitados.all():
+        preguntas = knowledge_base.objects.all().order_by('id_kbase')
+        resultado_evaluador = ResultadosEvaluador.objects.filter(evaluador=request.user, clase=clase).first()
+
+        if resultado_evaluador is not None and resultado_evaluador.completado:
+            # Mostrar el mensaje "Ya completaste el formulario"
+            return HttpResponse("Ya completaste el formulario")
+
+        if request.method == 'POST':
+            total_orientacion_personas = 0
+            total_orientacion_produccion = 0
+            calificaciones = {}
+
+            for i in range(1, 19):
+                respuesta = request.POST.get(f"respuesta_{i}")
+                if respuesta is not None:
+                    respuesta = int(respuesta)
+                else:
+                    respuesta = 0
+
+                if i in [1, 4, 6, 9, 10, 12, 14, 16, 17]:
+                    total_orientacion_personas += respuesta
+                else:
+                    total_orientacion_produccion += respuesta
+
+                pregunta = preguntas.get(id_kbase=i)
+                calificaciones[pregunta.question] = respuesta
+
+            total_orientacion_personas *= 0.2
+            total_orientacion_produccion *= 0.2
+
+           
+
+            engine = MotorLiderazgo()
+            engine.reset()
+            engine.declare(EstiloLiderazgo(total_orientacion_personas=total_orientacion_personas, total_orientacion_produccion=total_orientacion_produccion))
+            engine.run()
+            resultado = engine.resultado
+
+            if not resultado:
+                if total_orientacion_produccion > total_orientacion_personas:
+                    resultado = "Resultados inconcluyentes Con tendencias hacia Centrado a Produccion"
+                elif total_orientacion_personas > total_orientacion_produccion:
+                    resultado = "Resultados inconcluyentes Con tendencias hacia Centrado a Personas"
+                elif total_orientacion_personas == 5 and total_orientacion_produccion == 5:
+                    resultado = "Resultado indefinido sin tendencias a social o autoritario"
+
+            # Guardar los resultados en ResultadosEvaluador
+            resultado_evaluador = ResultadosEvaluador(
+                clase=clase,  # Asigna la clase actual
+                evaluador=request.user,  # Asigna el usuario que realiza el test
+                calificaciones=calificaciones,
+                resultado_final=resultado,
+                total_orientacion_personas=total_orientacion_personas,
+                total_orientacion_produccion=total_orientacion_produccion,
+                completado=True  
+            )
+            resultado_evaluador.save()
+
+            resultados = ResultadosEvaluador.objects.filter(evaluador=request.user, clase=clase)
+
+            return render(request, 'test_result.html', {'resultado_evaluador': resultado, 'resultados': resultados, 'preguntas': preguntas})
+        else:
+            return render(request, 'expert_test.html', {'preguntas': preguntas, 'clase': clase})
+    else:
+        return redirect('home')  # Agregar que si completado es = false que se haga todo esto pero sino que ponga de mensaje "Ya completaste el formulario"
+
+    
+
+@login_required
+def clase_completada(request, clase_id):
+    clase = get_object_or_404(Clase, pk=clase_id)
+
+    # Verifica si el usuario actual (profesor) está habilitado para esta clase
+    if request.user == clase.creador or request.user in clase.usuarios_habilitados.all():
+        # Filtrar todos los resultados de evaluador para esta clase
+        resultados_clase = ResultadosEvaluador.objects.filter(clase=clase)
+
+        resultados_con_info_usuario = []  # Aquí almacenaremos todos los resultados con información de usuario
+
+        for resultado in resultados_clase:
+            evaluador_info = {
+                'evaluado': resultado.evaluador,
+                'nombre': resultado.evaluador.first_name,  # Nombre del usuario
+                'apellido': resultado.evaluador.last_name,  # Apellido del usuario
+                'correo': resultado.evaluador.email,  # Correo del usuario
+                'resultado': resultado.resultado_final,
+                'calificaciones': resultado.calificaciones,
+                'total_orientacion_personas': resultado.total_orientacion_personas ,
+                'total_orientacion_produccion': resultado.total_orientacion_produccion,
+            }
+            resultados_con_info_usuario.append(evaluador_info)
+
+        return render(request, 'clase_completada.html', {'clase': clase, 'resultados_con_info_usuario': resultados_con_info_usuario})
+    else:
+        raise Http404("No tienes permiso para acceder a esta página")
+
+    
+
+@login_required
+def clases_panel(request):
+    user = request.user
+    type_user = user.myuser.type_user  # Asume que el tipo de usuario está almacenado en user.myuser.type_user
+
+    if type_user == 0:
+        # Si el usuario es de tipo 0, muestra las clases habilitadas para los estudiantes
+        clases_habilitadas = Clase.objects.filter(usuarios_habilitados=user)
+        template_name = 'clases_habilitadas.html'
+    else:
+        # Si el usuario no es de tipo 0 (por ejemplo, profesor), muestra las clases de su panel
+        clases_habilitadas = Clase.objects.filter(creador=user)
+        template_name = 'clases_panel.html'
+
+    return render(request, template_name, {'clases_habilitadas': clases_habilitadas})

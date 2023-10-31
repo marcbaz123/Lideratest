@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="es">
+    <style>
+        body {
+            background-image: url('https://i.postimg.cc/SNkGs5wN/gestion-empresarial.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Clase</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Agrega tu archivo de estilos CSS aquí -->
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header text-center" style="background: #002336; color: #fff;">
+                <h2>Crear Clase</h2>
+            </div>
+            <div class="card-body" style="background: rgba(238, 253, 255, 0.95); border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 35, 54, 0.1;">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="nombre">Nombre de la Evaluacion</label>
+                        <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Titulo de Evaluacion">
+                    </div>
+                    <div class="form-group">
+                        <label for="descripcion">Descripción de la Evaluacion</label>
+                        <textarea id="descripcion" name="descripcion" class="form-control" rows="4" placeholder="Descripción de la Evaluacion"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" style="background: #002336; border-color: #002336;">Crear Evaluacion</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+{% endblock %}

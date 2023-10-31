@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Task
+from .models import Clase, Task
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 class Taskform(ModelForm):
     class Meta:
         model = Task
-        fields = ['title','description', 'important']
+        fields = ['title','description', 'important', 'assigned_to']
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -27,3 +27,8 @@ class UserProfileUpdateForm(UserChangeForm):
             'last_name',
             'email',
         )
+class ClaseForm(forms.ModelForm):
+    class Meta:
+        model = Clase
+        fields = ['nombre', 'descripcion']
+
