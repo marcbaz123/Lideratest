@@ -60,15 +60,13 @@
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
-
+            <li class="nav-item">
+                    <a class="nav-link" href="{% url 'tutorial_lideratest' %}"><i class="fas fa-play"></i> Como Usar Lideratest?</a>
+                </li>
                 {% if user.is_authenticated %}
              <!--   <li class="nav-item">
                     <a class="nav-link" href="{% url 'expert' %}"><i class="fas fa-user-tie"></i> Test de Blake and Mouton</a>
                 </li> -->
-                
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'tutorial_lideratest' %}"><i class="fas fa-play"></i> Como Usar Lideratest?</a>
-                </li>
                 
                 {% if user.myuser.type_user == 1 %}
                 
