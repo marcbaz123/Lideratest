@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalles de la Clase</title>
+    <title>Detalles del Espacio</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
@@ -49,12 +49,12 @@
         <h1 class="mt-4">Detalles del Espacio</h1>
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Nombre de la Clase: {{ clase.nombre }}</h4>
+                <h4 class="card-title">Espacio para : {{ clase.nombre }}</h4>
                 <p class="card-text">Descripción: {{ clase.descripcion }}</p>
             </div>
         </div>
 
-        <h2 class="mt-4">Resultados de la Clase</h2>
+        <h2 class="mt-4">Diagnosticos del Espacio</h2>
         <ul class="list-group">
             {% for resultado in resultados_con_info_usuario %}
                 <li class="list-group-item">
