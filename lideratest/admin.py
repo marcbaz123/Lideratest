@@ -4,27 +4,25 @@ from .models import Task, MyUser, knowledge_base, ResultadoLiderazgo, Clase, Res
 # Define las clases de administración si es necesario
 class TaskAdmin(admin.ModelAdmin):
     # Agrega configuraciones específicas si es necesario
-    list_display = ['title', 'description', 'created', 'datecompleted', 'important', 'user', 'assigned_to']
+    pass
 
 class MyUserAdmin(admin.ModelAdmin):
     # Agrega configuraciones específicas si es necesario
-    list_display = ['user', 'type_user']
+    pass
 
 class knowledge_baseAdmin(admin.ModelAdmin):
     # Agrega configuraciones específicas si es necesario
-    list_display = ['id_kbase', 'question']
-
+    pass
 class ResultadoLiderazgoAdmin(admin.ModelAdmin):
     # Agrega configuraciones específicas si es necesario
-    list_display = ['user', 'fecha', 'calificaciones', 'resultado_final', 'total_orientacion_personas', 'total_orientacion_produccion']
-
+    pass
 class ClaseAdmin(admin.ModelAdmin):
     # Agrega configuraciones específicas si es necesario
-    list_display = ['nombre', 'descripcion', 'creador', 'completada']
+    pass
 
 class ResultadosEvaluadorAdmin(admin.ModelAdmin):
     # Agrega configuraciones específicas si es necesario
-    list_display = ['clase', 'evaluador', 'calificaciones', 'total_orientacion_personas', 'total_orientacion_produccion', 'resultado_final', 'completado', 'suma_orientacion']
+    pass
 
 # Registra los modelos en el panel de administración
 admin.site.register(Task, TaskAdmin)
