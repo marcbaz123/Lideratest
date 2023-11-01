@@ -67,7 +67,9 @@
              <!--   <li class="nav-item">
                     <a class="nav-link" href="{% url 'expert' %}"><i class="fas fa-user-tie"></i> Test de Blake and Mouton</a>
                 </li> -->
-                
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'clases' %}"><i class="fas fa-file"></i> Evaluaciones Habilitadas</a>
+                </li>
                 {% if user.myuser.type_user == 1 %}
                 
                  <!--<li class="nav-item">
@@ -83,9 +85,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'contact_admin' %}"><i class="fas fa-user-check"></i> Conviértete en Evaluador</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'clases' %}"><i class="fas fa-file"></i> Evaluaciones Habilitadas</a>
-                </li>
+                
                 {% endif %}
                 <li class="nav-item">
                     <a class= "nav-link" href="{% url 'update_profile' %}"><i class="fas fa-tasks"></i> Actualizar Perfil</a>
