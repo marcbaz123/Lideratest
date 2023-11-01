@@ -416,6 +416,7 @@ def expert_test(request, clase_id):
                 resultado_final=resultado,
                 total_orientacion_personas=total_orientacion_personas,
                 total_orientacion_produccion=total_orientacion_produccion,
+                fecha= datetime.datetime.now(),
                 completado=True  ,
                 suma_orientacion = total_orientacion_personas + total_orientacion_produccion
             )
