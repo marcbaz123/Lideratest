@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.urls import path  
 from lideratest import views
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,5 +31,6 @@ urlpatterns = [
     path('clase_completada/<int:clase_id>/', views.clase_completada, name='clase_completada'),
     path('clases_panel/', views.clases_panel, name='clases_panel'),
     path('detalle_clase/', views.detalle_clase, name='detalle_clase'),
+      path('tutorial_lideratest/', TemplateView.as_view(template_name='tutorial_lideratest.html'), name='tutorial_lideratest'),
  #   path('superconverter/', views.super_userconverter, name='superconverter'),
 ]

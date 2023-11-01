@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <div class="title-container">
+        <h1>¿Cómo funciona Lideratest?</h1>
+    </div>
+    <style>
+        body {
+            background: url('https://i.postimg.cc/02bM6xXx/Sin-t-tulo.png') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .video-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        iframe {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .title-container {
+            background: rgba(255, 255, 255, 0.8); /* Fondo blanquecino semitransparente */
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube.com/embed/-gp-Rim9khA" 
+            title="Sistema Experto Web para seleccion de Lider de equipo"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen="allowfullscreen"
+        ></iframe>
+    </div>
+    
+</body>
+</html>
+{% endblock %}

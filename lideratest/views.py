@@ -77,7 +77,7 @@ def update_profile(request):
                 # Asegura que la sesión del usuario siga siendo válida después de cambiar la contraseña
                 update_session_auth_hash(request, user)
 
-            return redirect('tasks')
+            return redirect('home')
     else:
         form = UserProfileUpdateForm(instance=request.user)
     return render(request, "update_profile.html", {'form': form})
@@ -316,7 +316,6 @@ def crear_clase(request):
     return render(request, 'crear_clase.html', {'form': form})
  
 
-@login_required
 def habilitar_usuarios(request, clase_id):
     clase = get_object_or_404(Clase, pk=clase_id)
     
@@ -324,11 +323,18 @@ def habilitar_usuarios(request, clase_id):
     usuarios_habilitados = clase.usuarios_habilitados.all()
     
     if request.method == 'POST':
-        # Procesar el formulario y habilitar usuarios seleccionados
-        usuarios_habilitados_ids = request.POST.getlist('usuarios_habilitados')
-        clase.usuarios_habilitados.set(usuarios_habilitados_ids)
-    
-    
+        try:
+            # Procesar el formulario y habilitar usuarios seleccionados
+            usuarios_habilitados_ids = request.POST.getlist('usuarios_habilitados')
+            clase.usuarios_habilitados.set(usuarios_habilitados_ids)
+
+            # Agregar un mensaje de éxito
+            messages.success(request, 'Usuarios habilitados con éxito.')
+
+        except Exception as e:
+            # En caso de error, agregar un mensaje de error
+            messages.error(request, 'Ocurrió un error al habilitar usuarios: {}'.format(str(e)))
+
     return render(request, 'habilitar_usuarios.html', {
         'clase': clase,
         'usuarios_disponibles': usuarios_disponibles,
@@ -410,7 +416,8 @@ def expert_test(request, clase_id):
                 resultado_final=resultado,
                 total_orientacion_personas=total_orientacion_personas,
                 total_orientacion_produccion=total_orientacion_produccion,
-                completado=True  
+                completado=True  ,
+                suma_orientacion = total_orientacion_personas + total_orientacion_produccion
             )
             resultado_evaluador.save()
 
@@ -443,10 +450,13 @@ def clase_completada(request, clase_id):
                 'correo': resultado.evaluador.email,  # Correo del usuario
                 'resultado': resultado.resultado_final,
                 'calificaciones': resultado.calificaciones,
-                'total_orientacion_personas': resultado.total_orientacion_personas ,
+                'total_orientacion_personas': resultado.total_orientacion_personas,
                 'total_orientacion_produccion': resultado.total_orientacion_produccion,
             }
             resultados_con_info_usuario.append(evaluador_info)
+
+        # Ordena los resultados por la suma de orientación en orden descendente
+        resultados_con_info_usuario = sorted(resultados_con_info_usuario, key=lambda x: x['total_orientacion_personas'] + x['total_orientacion_produccion'], reverse=True)
 
         return render(request, 'clase_completada.html', {'clase': clase, 'resultados_con_info_usuario': resultados_con_info_usuario})
     else:

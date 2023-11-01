@@ -2,49 +2,86 @@
 
 {% block content %}
 <html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles de la Clase</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
             background-image: url('https://i.postimg.cc/SNkGs5wN/gestion-empresarial.jpg');
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
+            color: #333;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        h1, h2, h4 {
+            color: #333;
+        }
+        .list-group-item {
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 10px;
+            padding: 10px;
+        }
+        .btn-link {
+            color: #007BFF;
+        }
+        .btn-link:hover {
+            text-decoration: none;
         }
     </style>
-<div class="container">
-    <h1 class="mt-4">Detalles de la Clase</h1>
-    <div class="card">
-      <div class="card-body">
-        <h4 class="card-title">Nombre de la Clase: {{ clase.nombre }}</h4>
-        <p class="card-text">Descripción: {{ clase.descripcion }}</p>
-      </div>
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-4">Detalles del Espacio</h1>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Nombre de la Clase: {{ clase.nombre }}</h4>
+                <p class="card-text">Descripción: {{ clase.descripcion }}</p>
+            </div>
+        </div>
+
+        <h2 class="mt-4">Resultados de la Clase</h2>
+        <ul class="list-group">
+            {% for resultado in resultados_con_info_usuario %}
+                <li class="list-group-item">
+                    <span class="font-weight-bold">Evaluado: {{ resultado.evaluado.username }}</span><br>
+                    <span>Nombre: {{ resultado.nombre }}</span><br>
+                    <span>Apellido: {{ resultado.apellido }}</span><br>
+                    <span>Correo: {{ resultado.correo }}</span><br>
+                    <span>Resultado: {{ resultado.resultado }}</span><br>
+                    <span>Total Orientación Personas: {{ resultado.total_orientacion_personas }}</span><br>
+                    <span>Total Orientación Producción: {{ resultado.total_orientacion_produccion }}</span><br>
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#calificaciones{{ forloop.counter }}">Ver Calificaciones</button>
+
+                    <div id="calificaciones{{ forloop.counter }}" class="collapse">
+                        <ul>
+                            {% for key, value in resultado.calificaciones.items %}
+                                <li>{{ key }}: {{ value }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
     </div>
-
-    <h2 class="mt-4">Resultados de la Clase</h2>
-    <ul class="list-group">
-      {% for resultado in resultados_con_info_usuario %}
-        <li class="list-group-item">
-          <span class="font-weight-bold">Evaluado: {{ resultado.evaluado.username }}</span><br>
-          <span>Nombre: {{ resultado.nombre }}</span><br>
-          <span>Apellido: {{ resultado.apellido }}</span><br>
-          <span>Correo: {{ resultado.correo }}</span><br>
-          <span>Resultado: {{ resultado.resultado }}</span><br>
-          <span>Total Orientación Personas: {{ resultado.total_orientacion_personas }}</span><br>
-          <span>Total Orientación Producción: {{ resultado.total_orientacion_produccion }}</span><br>
-          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#calificaciones{{ forloop.counter }}">Ver Calificaciones</button>
-
-          <div id="calificaciones{{ forloop.counter }}" class="collapse">
-            <ul>
-              {% for key, value in resultado.calificaciones.items %}
-                <li>{{ key }}: {{ value }}</li>
-              {% endfor %}
-            </ul>
-          </div>
-        </li>
-      {% endfor %}
-    </ul>
-  </div>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
 </html>
 {% endblock %}

@@ -51,6 +51,7 @@ class Clase(models.Model):
     creador = models.ForeignKey(User, on_delete=models.CASCADE)
     usuarios_habilitados = models.ManyToManyField(User, related_name='clases_habilitadas')
 
+
 class ResultadosEvaluador(models.Model):
     clase = models.ForeignKey(Clase, on_delete=models.CASCADE)
     evaluador = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -59,5 +60,6 @@ class ResultadosEvaluador(models.Model):
     total_orientacion_produccion = models.FloatField()
     resultado_final = models.CharField(max_length=255)
     completado = models.BooleanField(default=False)  # Campo para indicar si el usuario ha completado el test
+    suma_orientacion = models.IntegerField(default=0)
     def __str__(self):
         return f'ResultadosEvaluador {self.id}'

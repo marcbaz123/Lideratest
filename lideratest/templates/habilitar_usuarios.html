@@ -92,6 +92,18 @@
         <form method="post">
             {% csrf_token %}
             
+            <!-- Mostrar mensajes de éxito o error -->
+            {% if messages %}
+            <div class="mt-3">
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li {% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %}>
+                            {{ message }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
             <!-- Lista de usuarios disponibles -->
             <div class="list-group">
                 {% for usuario in usuarios_disponibles %}
