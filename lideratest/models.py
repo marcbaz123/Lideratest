@@ -59,6 +59,7 @@ class ResultadosEvaluador(models.Model):
     total_orientacion_personas = models.FloatField()
     total_orientacion_produccion = models.FloatField()
     resultado_final = models.CharField(max_length=255)
+    fecha = models.DateTimeField(null=True, blank=True)
     completado = models.BooleanField(default=False)  # Campo para indicar si el usuario ha completado el test
     suma_orientacion = models.IntegerField(default=0)
     def __str__(self):
