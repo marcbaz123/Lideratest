@@ -1,3 +1,4 @@
+import datetime
 from django import template
 from django.http import Http404, HttpResponse
 from django.utils import timezone
