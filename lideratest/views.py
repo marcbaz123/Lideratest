@@ -451,7 +451,7 @@ def clase_completada(request, clase_id):
                 'apellido': resultado.evaluador.last_name,  # Apellido del usuario
                 'correo': resultado.evaluador.email,  # Correo del usuario
                 'resultado': resultado.resultado_final,
-                'fecha': resultado.evaluador.date_joined,
+                'fecha': resultado.fecha,
                 'calificaciones': resultado.calificaciones,
                 'total_orientacion_personas': resultado.total_orientacion_personas,
                 'total_orientacion_produccion': resultado.total_orientacion_produccion,
