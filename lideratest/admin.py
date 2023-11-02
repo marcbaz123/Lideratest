@@ -2,9 +2,9 @@ from django.contrib import admin
 from .models import Task, MyUser, knowledge_base, ResultadoLiderazgo, Clase, ResultadosEvaluador
 
 # Define las clases de administración si es necesario
-class TaskAdmin(admin.ModelAdmin):
+#class TaskAdmin(admin.ModelAdmin):
     # Agrega configuraciones específicas si es necesario
-    pass
+ #   pass
 
 class MyUserAdmin(admin.ModelAdmin):
     # Agrega configuraciones específicas si es necesario
@@ -13,9 +13,9 @@ class MyUserAdmin(admin.ModelAdmin):
 class knowledge_baseAdmin(admin.ModelAdmin):
     # Agrega configuraciones específicas si es necesario
     pass
-class ResultadoLiderazgoAdmin(admin.ModelAdmin):
+#class ResultadoLiderazgoAdmin(admin.ModelAdmin):
     # Agrega configuraciones específicas si es necesario
-    pass
+ #   pass
 class ClaseAdmin(admin.ModelAdmin):
     # Agrega configuraciones específicas si es necesario
     pass
