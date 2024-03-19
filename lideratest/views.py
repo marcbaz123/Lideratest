@@ -7,7 +7,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
-from .forms import Taskform, UserProfileUpdateForm, ClaseForm
+from .forms import  CombinedUpdateForm, MyUserForm, Taskform, UserProfileUpdateForm, ClaseForm
 from .models import Clase, MyUser, ResultadoLiderazgo, ResultadosEvaluador, Task, knowledge_base
 from django.contrib.auth.decorators import login_required
 from .motor_inferencia import EstiloLiderazgo, MotorLiderazgo
@@ -53,7 +53,7 @@ def signup(request):
             except IntegrityError:
                 return render(request, "signup.html", {
                     'form': UserCreationForm,
-                    'error': "User Already Exists",
+                    'error': "Este nombre de Usuario ya existe",
                 })
    
             
@@ -65,23 +65,31 @@ def is_type_user_1(user):
     return user.myuser.type_user == 1
 @login_required
 def update_profile(request):
-    if request.method == "POST":
-        form = UserProfileUpdateForm(request.POST, instance=request.user)
-        if form.is_valid():
-            user = form.save()
+    # Obtén o crea una instancia de MyUser correspondiente al usuario actual
+    myuser_instance, created = MyUser.objects.get_or_create(user=request.user)
 
-            # Actualiza la sesión del usuario si se ha cambiado la contraseña
-            password = form.cleaned_data['password']
+    if request.method == "POST":
+        form = CombinedUpdateForm(request.POST, instance=request.user)
+        form_myuser = MyUserForm(request.POST, instance=myuser_instance)  # Usa la instancia de MyUser
+
+        if form.is_valid() and form_myuser.is_valid():
+            user = form.save()
+            myuser = form_myuser.save(commit=False)
+            myuser.user = user
+            myuser.save()
+
+            password = form.cleaned_data.get('password')
             if password:
                 user.set_password(password)
                 user.save()
-                # Asegura que la sesión del usuario siga siendo válida después de cambiar la contraseña
                 update_session_auth_hash(request, user)
 
-            return redirect('home')
+            return redirect('update_profile')
     else:
-        form = UserProfileUpdateForm(instance=request.user)
-    return render(request, "update_profile.html", {'form': form})
+        form = CombinedUpdateForm(instance=request.user)
+        form_myuser = MyUserForm(instance=myuser_instance)  # Usa la instancia de MyUser
+
+    return render(request, "update_profile.html", {'form': form, 'form_myuser': form_myuser})
     
 @login_required
 def tasks (request):
@@ -451,7 +459,7 @@ def clase_completada(request, clase_id):
                 'apellido': resultado.evaluador.last_name,  # Apellido del usuario
                 'correo': resultado.evaluador.email,  # Correo del usuario
                 'resultado': resultado.resultado_final,
-                'fecha': resultado.fecha,
+                'fecha': resultado.evaluador.date_joined,
                 'calificaciones': resultado.calificaciones,
                 'total_orientacion_personas': resultado.total_orientacion_personas,
                 'total_orientacion_produccion': resultado.total_orientacion_produccion,
