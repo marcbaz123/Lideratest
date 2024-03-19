@@ -1,8 +1,11 @@
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 # Create your models here.
+
+
 class Task(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True)
@@ -18,6 +21,11 @@ class Task(models.Model):
 class MyUser(models.Model):
     type_user = models.IntegerField(default=0)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='myuser')
+    academy_level = models.CharField(max_length=100, blank=True)
+    job = models.CharField(max_length=100, blank=True)
+    position = models.CharField(max_length=100, blank=True)
+    def __str__(self):
+        return self.user.username
     
 class knowledge_base(models.Model):
     id_kbase = models.AutoField(primary_key=True, db_column='id', default=1)
@@ -59,8 +67,8 @@ class ResultadosEvaluador(models.Model):
     total_orientacion_personas = models.FloatField()
     total_orientacion_produccion = models.FloatField()
     resultado_final = models.CharField(max_length=255)
-    fecha = models.DateTimeField(null=True, blank=True)
     completado = models.BooleanField(default=False)  # Campo para indicar si el usuario ha completado el test
+    fecha = models.DateTimeField(null=True, blank=True)
     suma_orientacion = models.IntegerField(default=0)
     def __str__(self):
         return f'ResultadosEvaluador {self.id}'
