@@ -1,5 +1,6 @@
 from django.forms import ModelForm
-from .models import Clase, Task
+
+from .models import Clase, Task, MyUser
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
@@ -27,6 +28,37 @@ class UserProfileUpdateForm(UserChangeForm):
             'last_name',
             'email',
         )
+        
+class MyUserForm(forms.ModelForm):
+    academy_level = forms.CharField(max_length=100, required=False)
+    job = forms.CharField(max_length=100, required=False)
+    position = forms.CharField(max_length=100, required=False)
+
+    class Meta:
+        model = MyUser
+        fields = (
+            'academy_level',
+            'job',
+            'position',
+        )
+
+    def clean(self):
+        cleaned_data = super().clean()
+        return cleaned_data        
+
+class CombinedUpdateForm(forms.ModelForm):
+    academy_level = forms.CharField(max_length=100, required=False)
+    job = forms.CharField(max_length=100, required=False)
+    position = forms.CharField(max_length=100, required=False)
+
+    class Meta:
+        model = User
+        fields = (
+            'first_name',
+            'last_name',
+            'email',
+        )
+        
 class ClaseForm(forms.ModelForm):
     class Meta:
         model = Clase
