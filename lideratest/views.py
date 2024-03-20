@@ -453,6 +453,14 @@ def clase_completada(request, clase_id):
         resultados_con_info_usuario = []  # Aquí almacenaremos todos los resultados con información de usuario
 
         for resultado in resultados_clase:
+  
+            try:
+                my_user_instance = resultado.evaluador.myuser  # Acceder directamente a la instancia de MyUser
+                academy_level = my_user_instance.academy_level
+            except MyUser.DoesNotExist:
+                # Manejar el caso en el que no se encuentre la instancia de MyUser
+                academy_level = "Sin trabajo registrado"
+                         
             evaluador_info = {
                 'evaluado': resultado.evaluador,
                 'nombre': resultado.evaluador.first_name,  # Nombre del usuario
@@ -463,6 +471,7 @@ def clase_completada(request, clase_id):
                 'calificaciones': resultado.calificaciones,
                 'total_orientacion_personas': resultado.total_orientacion_personas,
                 'total_orientacion_produccion': resultado.total_orientacion_produccion,
+                'academy_level': academy_level,  # Agrega el campo 'job' de MyUser                 
             }
             resultados_con_info_usuario.append(evaluador_info)
 
