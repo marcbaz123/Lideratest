@@ -42,6 +42,23 @@
         .btn-link:hover {
             text-decoration: none;
         }
+
+        /* Oculta el contenido inicialmente */
+        .collapse-content {
+            display: none;
+        }
+
+        /* Muestra el contenido cuando el botón es clickeado */
+        .collapse-content.expanded {
+            display: block;
+        }
+
+        /* Cambia el estilo del botón cuando el contenido está expandido */
+        .btn-link.expanded {
+            color: #007BFF;
+            font-weight: bold;
+        }
+        
     </style>
 </head>
 <body>
@@ -67,9 +84,10 @@
                     <span>Resultado: {{ resultado.resultado }}</span><br>
                     <span>Total Orientación Personas: {{ resultado.total_orientacion_personas }}</span><br>
                     <span>Total Orientación Producción: {{ resultado.total_orientacion_produccion }}</span><br>
-                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#calificaciones{{ forloop.counter }}">Ver Calificaciones</button>
-
-                    <div id="calificaciones{{ forloop.counter }}" class="collapse">
+                     <!-- Otros detalles del usuario -->
+                    <button class="btn btn-link toggle-content" type="button" aria-expanded="false">Ver Calificaciones</button>
+                    <!-- Contenido que se mostrará/ocultará -->
+                    <div class="collapse-content">
                         <ul>
                             {% for key, value in resultado.calificaciones.items %}
                                 <li>{{ key }}: {{ value }}</li>
@@ -84,6 +102,17 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Agrega un evento de clic a todos los botones con la clase 'toggle-content'
+        $(document).ready(function(){
+            $('.toggle-content').click(function(){
+                // Encuentra el siguiente elemento 'collapse-content' y alterna su clase 'expanded'
+                $(this).next('.collapse-content').toggleClass('expanded');
+                // Cambia el texto y estilo del botón
+                $(this).toggleClass('expanded');
+            });
+        });
+    </script>
 </body>
 </html>
 {% endblock %}
