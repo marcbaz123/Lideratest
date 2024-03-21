@@ -456,7 +456,10 @@ def clase_completada(request, clase_id):
             
             try:
                 my_user_instance = resultado.evaluador.myuser  # Acceder directamente a la instancia de MyUser
-                academy_level = my_user_instance.academy_level
+                if my_user_instance.academy_level.strip():  # Verificar si el campo no está vacío
+                    academy_level = my_user_instance.academy_level
+               else:
+                    academy_level = "Sin Especificar"
             except MyUser.DoesNotExist:
                 # Manejar el caso en el que no se encuentre la instancia de MyUser
                 academy_level = "Sin Especificar"
