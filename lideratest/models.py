@@ -21,7 +21,7 @@ class Task(models.Model):
 class MyUser(models.Model):
     type_user = models.IntegerField(default=0)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='myuser')
-    academy_level = models.CharField(max_length=100, blank=True)
+    academy_level = models.CharField(max_length=100, default="Sin Especificar")
     job = models.CharField(max_length=100, blank=True)
     position = models.CharField(max_length=100, blank=True)
     def __str__(self):
