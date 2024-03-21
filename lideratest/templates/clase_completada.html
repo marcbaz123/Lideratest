@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalles de la clase de evaluación</title>
+    <title>Detalles del Espacio</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
@@ -43,6 +43,7 @@
             text-decoration: none;
         }
 
+
         /* Oculta el contenido inicialmente */
         .collapse-content {
             display: none;
@@ -58,7 +59,7 @@
             color: #007BFF;
             font-weight: bold;
         }
-        
+
     </style>
 </head>
 <body>
@@ -78,13 +79,13 @@
                     <span class="font-weight-bold">Evaluado: {{ resultado.evaluado.username }}</span><br>
                     <span>Nombre: {{ resultado.nombre }}</span><br>
                     <span>Apellido: {{ resultado.apellido }}</span><br>
-                    <span>Nivel Academico: {{ resultado.academy_level }}</span><br>                    
-                    <span>Fecha: {{ resultado.fecha }}</span><br>
                     <span>Correo: {{ resultado.correo }}</span><br>
+                    <span>Nivel Academico: {{ resultado.academy_level }}</span><br>
+                    <span>Fecha: {{ resultado.fecha }}</span><br>
                     <span>Resultado: {{ resultado.resultado }}</span><br>
                     <span>Total Orientación Personas: {{ resultado.total_orientacion_personas }}</span><br>
                     <span>Total Orientación Producción: {{ resultado.total_orientacion_produccion }}</span><br>
-                     <!-- Otros detalles del usuario -->
+                   <!-- Otros detalles del usuario -->
                     <button class="btn btn-link toggle-content" type="button" aria-expanded="false">Ver Calificaciones</button>
                     <!-- Contenido que se mostrará/ocultará -->
                     <div class="collapse-content">
@@ -102,7 +103,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
+   <script>
         // Agrega un evento de clic a todos los botones con la clase 'toggle-content'
         $(document).ready(function(){
             $('.toggle-content').click(function(){
