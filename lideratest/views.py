@@ -31,7 +31,7 @@ def home(request):
         # Si el usuario no está autenticado, redirige a la página de inicio de sesión (signin)
         return redirect('signin')
 
-
+#Aqui se registra el usuario
 def signup(request):
     if request.method == "GET":
         return render(request, "signup.html", {'form': UserCreationForm})
