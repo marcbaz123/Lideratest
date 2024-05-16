@@ -88,13 +88,13 @@
                    <!-- Otros detalles del usuario -->
                     <button class="btn btn-link toggle-content" type="button" aria-expanded="false">Ver Calificaciones</button>
                     <!-- Contenido que se mostrará/ocultará -->
-                     <div id="calificaciones{{ forloop.counter }}" class="collapse">
+                    <div class="collapse-content">
                         <ul>
                             {% for key, value in resultado.calificaciones.items %}
-                                <li>  {{ forloop.counter }} - {{ key }}: {{ value }}</li>
+                                <li>{{ key }}: {{ value }}</li>
                             {% endfor %}
                         </ul>
-                    </div> 
+                    </div>
                 </li>
             {% endfor %}
         </ul>
