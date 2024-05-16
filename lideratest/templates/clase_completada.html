@@ -91,7 +91,7 @@
                      <div id="calificaciones{{ forloop.counter }}" class="collapse">
                         <ul>
                             {% for key, value in resultado.calificaciones.items %}
-                                <li>  {{id}}   {{ forloop.counter }} - {{ key }}: {{ value }}</li>
+                                <li>  {{ forloop.counter }} - {{ key }}: {{ value }}</li>
                             {% endfor %}
                         </ul>
                     </div> 
