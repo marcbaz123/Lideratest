@@ -445,7 +445,7 @@ def expert_test(request, clase_id):
 def clase_completada(request, clase_id):
     clase = get_object_or_404(Clase, pk=clase_id)
 
-    # Verifica si el usuario actual (profesor) está habilitado para esta clase
+    # Verifica si el usuario actual (evaluador) está habilitado para esta clase
     if request.user == clase.creador or request.user in clase.usuarios_habilitados.all():
         # Filtrar todos los resultados de evaluador para esta clase
         resultados_clase = ResultadosEvaluador.objects.filter(clase=clase)
@@ -453,16 +453,13 @@ def clase_completada(request, clase_id):
         resultados_con_info_usuario = []  # Aquí almacenaremos todos los resultados con información de usuario
 
         for resultado in resultados_clase:
-            
-            try:
-                my_user_instance = resultado.evaluador.myuser  # Acceder directamente a la instancia de MyUser
-                if my_user_instance.academy_level.strip():  # Verificar si el campo no está vacío
-                    academy_level = my_user_instance.academy_level
-                else:
-                    academy_level = "Sin Especificar"
-            except MyUser.DoesNotExist:
-                # Manejar el caso en el que no se encuentre la instancia de MyUser
-                academy_level = "Sin Especificar"
+            condition1_met = any(key == "Nada es más importante que completar un objetivo tarea." and value >= 3 for key, value in resultado.calificaciones.items())
+            condition2_met = any(key == "No hay nada más importante que desarrollar un gran equipo de trabajo." and value >= 3 for key, value in resultado.calificaciones.items())
+            all_conditions_met = condition1_met and condition2_met
+
+            condition3_met = any(key == "Cuando corrijo errores no me preocupan las relaciones personales." and value >= 3 for key, value in resultado.calificaciones.items())
+            condition4_met = any(key == "Aconsejar a mis empleados para que mejore su desempeño es mi naturaleza." and value >= 3 for key, value in resultado.calificaciones.items())
+            all_conditions2_met = condition3_met and condition4_met
             
             evaluador_info = {
                 'evaluado': resultado.evaluador,
@@ -474,17 +471,21 @@ def clase_completada(request, clase_id):
                 'calificaciones': resultado.calificaciones,
                 'total_orientacion_personas': resultado.total_orientacion_personas,
                 'total_orientacion_produccion': resultado.total_orientacion_produccion,
-                'academy_level': academy_level,  # Agrega el campo 'job' de MyUser
+                'all_conditions_met': all_conditions_met,  # Añadir el resultado de la condición
+                'all_conditions2_met': all_conditions2_met  # Añadir el resultado de la condición 2
             }
             resultados_con_info_usuario.append(evaluador_info)
 
         # Ordena los resultados por la suma de orientación en orden descendente
         resultados_con_info_usuario = sorted(resultados_con_info_usuario, key=lambda x: x['total_orientacion_personas'] + x['total_orientacion_produccion'], reverse=True)
 
-        return render(request, 'clase_completada.html', {'clase': clase, 'resultados_con_info_usuario': resultados_con_info_usuario})
+        context = {
+            'clase': clase,
+            'resultados_con_info_usuario': resultados_con_info_usuario,
+        }
+        return render(request, 'clase_completada.html', context)
     else:
         raise Http404("No tienes permiso para acceder a esta página")
-
     
 
 @login_required
