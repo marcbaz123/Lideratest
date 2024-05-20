@@ -59,8 +59,10 @@
             color: #007BFF;
             font-weight: bold;
         }
+        
 
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
     <div class="container">
@@ -89,11 +91,62 @@
                     <button class="btn btn-link toggle-content" type="button" aria-expanded="false">Ver Calificaciones</button>
                     <!-- Contenido que se mostrará/ocultará -->
                     <div class="collapse-content">
-                        <ul>
+                        <ul class="list-group">
                             {% for key, value in resultado.calificaciones.items %}
-                                <li>{{ key }}: {{ value }}</li>
+                            <li class="list-group-item py-2 d-flex justify-content-between align-items-start">
+                                <div class="w-100">
+                                    {% if key == "Nada es más importante que completar un objetivo tarea." %}
+                                        {% if resultado.all_conditions_met %}
+                                        <span class="text-danger font-weight-bold">
+                                            <i class="fas fa-exclamation-circle"></i> {{ key }}: {{ value }}
+                                        </span>
+                                        <small class="text-danger d-block mt-1">
+                                            Resultado en contradiccion con el item "No hay nada más importante que desarrollar un gran equipo de trabajo."
+                                        </small>
+                                        {% else %}
+                                            <span>{{ key }}: {{ value }}</span>
+                                        {% endif %}
+                                    {% elif key == "No hay nada más importante que desarrollar un gran equipo de trabajo." %}
+                                        {% if resultado.all_conditions_met %}
+                                        <span class="text-danger font-weight-bold">
+                                            <i class="fas fa-exclamation-circle"></i> {{ key }}: {{ value }}
+                                        </span>
+                                        <small class="text-danger d-block mt-1">
+                                            Resultado en contradiccion con "Nada es más importante que completar un objetivo tarea."
+                                        </small>
+                                        {% else %}
+                                            <span>{{ key }}: {{ value }}</span>
+                                        {% endif %}
+                                    {% elif key == "Cuando corrijo errores no me preocupan las relaciones personales." %}
+                                        {% if resultado.all_conditions2_met %}
+                                            <span class="text-warning font-weight-bold">
+                                                <i class="fas fa-exclamation-circle"></i> {{ key }}: {{ value }}
+                                            </span>
+                                             <small class="text-danger d-block mt-1">
+                                            Resultado en contradiccion con "Aconsejar a mis empleados para que mejore su desempeño es mi naturaleza."
+                                        </small>
+                                        {% else %}
+                                            <span>{{ key }}: {{ value }}</span>
+                                        {% endif %}
+                                    {% elif key == "Aconsejar a mis empleados para que mejore su desempeño es mi naturaleza." %}
+                                        {% if resultado.all_conditions2_met %}
+                                            <span class="text-warning font-weight-bold">
+                                                <i class="fas fa-exclamation-circle"></i> {{ key }}: {{ value }}
+                                            </span>
+                                            <small class="text-danger d-block mt-1">
+                                            Resultado en contradiccion con "Cuando corrijo errores no me preocupan las relaciones personales."
+                                        </small>
+                                        {% else %}
+                                            <span>{{ key }}: {{ value }}</span>
+                                        {% endif %}
+                                    {% else %}
+                                        <span>{{ key }}: {{ value }}</span>
+                                    {% endif %}
+                                </div>
+                            </li>
                             {% endfor %}
                         </ul>
+                        
                     </div>
                 </li>
             {% endfor %}
