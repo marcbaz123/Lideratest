@@ -1,5 +1,5 @@
 """
-WSGI config for djangolidera project.
+WSGI config for djangolidera project..
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
